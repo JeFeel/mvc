@@ -17,7 +17,7 @@
 
 
      <%--     <a href="/hw/s-login-form">다시 로그인하기</a>--%>
-
+     <%-- script에서는 검증이 아닌 단순히 switch로 경우를 나누어서 웹에 보여줄 메세지를 선택--%>
      <%--     <script>--%>
      <%--          let result = '${result}';--%>
      <%--          console.log(result);--%>

@@ -61,7 +61,6 @@
             <!-- 화면에 헨더링은 안 되지만 서버로 보낼 수 있음-->
             <input id="price-tag" type="hidden" name="price" value="3000">
 
-
             <label>
                 <button type="submit">주문하기</button>
             </label>
@@ -80,8 +79,6 @@
         macchiato: 5000
     };
 
-
-
     // change : input이나 select태그의 값이 변했을 때
 
     const $menu = document.getElementById('menu-sel');
@@ -91,8 +88,7 @@
         // console.log(coffeePrice[e.target.value]);
 
         const price = coffeePrice[e.target.value]
-        document.querySelector('.price-value').textContent
-            = price;
+        document.querySelector('.price-value').textContent = price;
 
         const $priceTag = document.getElementById('price-tag');
         $priceTag.value = price;

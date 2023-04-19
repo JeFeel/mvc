@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 
 
-//어떤 요청들을 처리할지 공통 URL을 설계
+//어떤 요청들을 처리할지 공통 URL을 설계 : ControllerV1
 @RequestMapping("/spring/*")
 // 이 클래스의 객체를 스프링이 관리하도록 bean을 등록
 @Controller //@Component와 같은 개념
@@ -46,8 +46,8 @@ public class ControllerV1 {
     // ==> ex ) /spring/major?stu=kim&major=business&grade=3
     @RequestMapping("/major")
     public String major(
-            String stu,  //url이랑 이름도 같고 defaulValue 설정 안 할거면 @RequestParam 생략 가능!
-            @RequestParam("major") String mj,   //url에 괄호안 단어가 있을경우
+            String stu,  //url이랑 이름도 같고 defaultValue 설정 안 할거면 @RequestParam 생략 가능!
+            @RequestParam("major") String mj,   //url에 괄호 안 단어가 있을경우
             @RequestParam(defaultValue = "1") int grade  //전달되지 않은 경우 기본값
     ) {
 

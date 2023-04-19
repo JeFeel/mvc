@@ -19,7 +19,7 @@
         <h1>로그인하기</h1>
 
         <ul>
-            <li># 아이디: <input type="text" name="id"></li>
+            <li># 아이디: <input type="text" name="id"></li> <%--class도 id도 아닌 name인 점에 주의!--%>
             <li># 비밀번호: <input type="text" name="pw"></li>
         </ul>
 
