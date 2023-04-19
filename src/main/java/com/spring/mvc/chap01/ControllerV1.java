@@ -68,7 +68,7 @@ public class ControllerV1 {
     // ==> ex) /spring/order?oNum=20230419007-P&goods=구두&amount=3&price=50000....
 
     @RequestMapping("/order")
-    public String order(OrderRequestDTO dto){
+    public String order(OrderRequestDTO dto) {
         System.out.println("dto = " + dto);
         return "";
     }
@@ -81,7 +81,7 @@ public class ControllerV1 {
     public String member(
             @PathVariable String userName, // / 뒤에 있는거 읽음,  @PathVariable은 생략 불가
             @PathVariable long bNo
-    ){
+    ) {
         System.out.println("userName = " + userName);
         System.out.println("bNo = " + bNo);
 
@@ -95,10 +95,10 @@ public class ControllerV1 {
     public String foodSelect(
             String foodName,
             String category
-    ){
+    ) {
         System.out.println("foodName = " + foodName);
         System.out.println("category = " + category);
 
-        return  "hello";
+        return "hello";
     }
 }
