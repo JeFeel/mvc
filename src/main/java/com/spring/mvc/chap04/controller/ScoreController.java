@@ -54,7 +54,7 @@ public class ScoreController {
 //        this.repository = repository;
 //    }
 
-    // 성적등록화면 띄우기 + 정보목록조회
+    // 1. 성적등록화면 띄우기 + 정보목록조회
     @GetMapping("/list")
     public String list(Model model, @RequestParam(defaultValue = "num") String sort) {
         System.out.println("/score/list : GET!");
@@ -66,7 +66,7 @@ public class ScoreController {
         return "chap04/score-list";
     }
 
-    // 성적 정보 등록 처리 요청
+    // 2. 성적 정보 등록 처리 요청
     @PostMapping("/register")
     public String register(ScoreRequestDTO dto) {
 
@@ -97,7 +97,7 @@ public class ScoreController {
         return "redirect:/score/list"; //redirect:요청 URL
     }
 
-    //성적정보 삭제 요청
+    // 3. 성적정보 삭제 요청
     @GetMapping("/remove")
     public String remove(@RequestParam int stuNum) {
         System.out.println("/score/remove : GET!");
@@ -106,7 +106,7 @@ public class ScoreController {
         return "redirect:/score/list";
     }
 
-    // 성적정보 상세조회
+    // 4. 성적정보 상세조회
     @GetMapping("/detail")
     public String detail(@RequestParam int stuNum, Model model) {
 
@@ -117,7 +117,7 @@ public class ScoreController {
         return "chap04/score-detail";
     }
 
-    // 성적정보 수정
+    // 5. 성적정보 수정
     @GetMapping("/modify")
     public String modify(@RequestParam int stuNum, Model model){
         Score s = repository.findByStuNum(stuNum);
@@ -125,7 +125,7 @@ public class ScoreController {
         return "chap04/score-modify";
     }
 
-    // 수정 완료 처리
+    // 6. 수정 완료 처리
     @PostMapping("/modify")
     public String modify(@RequestParam int stuNum,ScoreRequestDTO dto, Model model){
         Score score = repository.findByStuNum(stuNum);
