@@ -10,8 +10,10 @@ import java.util.List;
 
 
 public interface ScoreRepository {
+
     // 성적 정보 전체 목록 조회
     List<Score> findAll(); //일반 조회
+
     default List<Score> findAll(String sort) {  //정렬조회
         return null;
     }; //default 주면 오버라이딩 강제x

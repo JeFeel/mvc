@@ -5,8 +5,10 @@ import com.spring.mvc.chap04.dto.ScoreRequestDTO;
 import lombok.*;
 
 
-@Setter @Getter
-@ToString @EqualsAndHashCode
+@Setter
+@Getter
+@ToString
+@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 public class Score {
@@ -24,6 +26,7 @@ public class Score {
         this.name = dto.getName();
         changeScore(dto);
     }
+
     public void changeScore(ScoreRequestDTO dto) { //dto를 전달받는 생성자
         this.kor = dto.getKor();
         this.eng = dto.getEng();
@@ -33,21 +36,21 @@ public class Score {
     }
 
     private void calcGrade() {
-        if(average>=90){
-            this.grade= Grade.A;
-        }else if(average>=80){
-            this.grade=Grade.B;
-        }else if(average>=70){
-            this.grade=Grade.C;
-        }else if(average>=60){
-            this.grade=Grade.D;
-        }else{
-            this.grade=Grade.F;
+        if (average >= 90) {
+            this.grade = Grade.A;
+        } else if (average >= 80) {
+            this.grade = Grade.B;
+        } else if (average >= 70) {
+            this.grade = Grade.C;
+        } else if (average >= 60) {
+            this.grade = Grade.D;
+        } else {
+            this.grade = Grade.F;
         }
     }
 
     private void calcTotalAndAvg() {
-        this.total = kor+eng+math;
-        this.average = total/ 3.0;
+        this.total = kor + eng + math;
+        this.average = total / 3.0;
     }
 }

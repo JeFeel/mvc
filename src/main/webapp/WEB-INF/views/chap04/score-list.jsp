@@ -26,11 +26,11 @@
             display: block;
         }
 
-        .score-list>li {
+        .score-list > li {
             margin-bottom: 10px;
         }
 
-        .score-list>li:first-child {
+        .score-list > li:first-child {
             font-size: 1.2em;
             color: blue;
             font-weight: 700;
@@ -64,10 +64,12 @@
 
             width: 50%;
         }
+
         .list-header .sort-link-group {
             display: flex;
 
         }
+
         .list-header .sort-link-group div {
             margin-right: 20px;
         }
@@ -116,7 +118,7 @@
                 <c:forEach var="s" items="${sList}">
                     <li>
                         # 학번: ${s.stuNum}, 이름: <a href="/score/detail?stuNum=${s.stuNum}">${s.name}</a>, 국어:
-                        ${s.kor}점, 영어: ${s.eng}점, 수학: ${s.math}점, 총점: ${s.total}점
+                            ${s.kor}점, 영어: ${s.eng}점, 수학: ${s.math}점, 총점: ${s.total}점
                         , 평균: ${s.average}점, 학점: ${s.grade}
                         <a class="del-btn" href="/score/remove?stuNum=${s.stuNum}">삭제</a>
                     </li>
@@ -124,7 +126,6 @@
             </ul>
 
         </section>
-
 
 
     </div>

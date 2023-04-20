@@ -58,7 +58,7 @@ public class ScoreController {
     @GetMapping("/list")
     public String list(Model model, @RequestParam(defaultValue = "num") String sort) {
         System.out.println("/score/list : GET!");
-        System.out.println("정렬 요구사항: "+sort);
+        System.out.println("정렬 요구사항: " + sort);
 
         List<Score> scoreList = repository.findAll(sort);
         model.addAttribute("sList", scoreList);
@@ -72,7 +72,7 @@ public class ScoreController {
 
         // 입력데이터 (쿼리스트링) 읽기
 
-        System.out.println("/score/register : POST! - "+dto);
+        System.out.println("/score/register : POST! - " + dto);
 
         // dto(ScoreDTO)를 entity(Score)로 변환해야 함
         // controller에서 직접 뽑을 수도 있지만
@@ -83,14 +83,13 @@ public class ScoreController {
         repository.save(score);
 
         /*
-        * 등록요청해서 JSP 뷰 포워딩을 하면
-        * 갱신된 목록을 다시한번 저장소에서 불러와
-        * 모델에 담는 추가적인 코드가 필요하지만
-        *
-        * 리다이렉트를 통해서 위에서 만든 /score/list : GET을
-        * 자동으로 다시 보낼 수 있다면 번거로운 코드가
-        * 줄어들 수 있겠다
-        * */
+         * 등록요청해서 JSP 뷰 포워딩을 하면
+         * 갱신된 목록을 다시한번 저장소에서 불러와
+         * 모델에 담는 추가적인 코드가 필요하지만
+         *
+         * 리다이렉트를 통해서 위에서 만든 /score/list : GET을
+         * 자동으로 다시 보낼 수 있다면 번거로운 코드가 줄어들 수 있겠다
+         * */
 
         //save가 끝나면 /score/list로 자동으로 요청 보내게끔 redirect
 
@@ -119,7 +118,7 @@ public class ScoreController {
 
     // 5. 성적정보 수정
     @GetMapping("/modify")
-    public String modify(@RequestParam int stuNum, Model model){
+    public String modify(@RequestParam int stuNum, Model model) {
         Score s = repository.findByStuNum(stuNum);
         model.addAttribute("s", s);
         return "chap04/score-modify";
@@ -127,10 +126,10 @@ public class ScoreController {
 
     // 6. 수정 완료 처리
     @PostMapping("/modify")
-    public String modify(@RequestParam int stuNum,ScoreRequestDTO dto, Model model){
+    public String modify(@RequestParam int stuNum, ScoreRequestDTO dto, Model model) {
         Score score = repository.findByStuNum(stuNum);
         score.changeScore(dto);
         model.addAttribute("s", score);
-        return "redirect:/score/detail?stuNum="+stuNum; //상세보기 페이지로 리다이렉트
+        return "redirect:/score/detail?stuNum=" + stuNum; //상세보기 페이지로 리다이렉트
     }
 }
