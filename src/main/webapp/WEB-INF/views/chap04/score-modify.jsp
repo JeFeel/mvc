@@ -65,10 +65,11 @@
                 <ul>
                     <li># 국어: <input type="text" name="kor" value="${s.kor}"></li>
                     <li># 영어: <input type="text" name="eng" value="${s.eng}"></li>
-                    <li># 수학: <input type="text" name="math" value="${s.math}"></li>
+                    <li># 수학: <input type="ztext" name="math" value="${s.math}"></li>
                 </ul>
                 <div class="btn-group">
                     <button type="submit">수정완료</button>
+                    <button type="button" onclick="history.back()">이전으로</button>
                 </div>
             </form>
         </section>
