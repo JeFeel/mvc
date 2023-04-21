@@ -1,6 +1,7 @@
 package com.spring.mvc.chap04.controller;
 
 
+import com.spring.mvc.chap04.dto.ScoreListResponseDTO;
 import com.spring.mvc.chap04.dto.ScoreRequestDTO;
 import com.spring.mvc.chap04.entity.Score;
 import com.spring.mvc.chap04.repository.ScoreRepository;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 /*
@@ -61,7 +64,14 @@ public class ScoreController {
         System.out.println("정렬 요구사항: " + sort);
 
         List<Score> scoreList = repository.findAll(sort);
-        model.addAttribute("sList", scoreList);
+
+        //scoreList에서 원하는 정보만 추출하고 이름을 마스킹해서
+        // 다시 DTO 리스트로 변환해줌
+        List<ScoreListResponseDTO> dto
+                = scoreList.stream().map(ScoreListResponseDTO::new).collect(Collectors.toList());
+
+
+        model.addAttribute("sList", dto);
 
         return "chap04/score-list";
     }
@@ -108,28 +118,33 @@ public class ScoreController {
     // 4. 성적정보 상세조회
     @GetMapping("/detail")
     public String detail(@RequestParam int stuNum, Model model) {
-
-        Score s = repository.findByStuNum(stuNum);
-        model.addAttribute("s", s);
-
         System.out.println("/score/detail : GET!");
+        extracted(stuNum, model);
         return "chap04/score-detail";
     }
+
 
     // 5. 성적정보 수정
     @GetMapping("/modify")
     public String modify(@RequestParam int stuNum, Model model) {
-        Score s = repository.findByStuNum(stuNum);
-        model.addAttribute("s", s);
+        System.out.println("/score/modify : GET!");
+        extracted(stuNum, model);
         return "chap04/score-modify";
     }
 
     // 6. 수정 완료 처리
     @PostMapping("/modify")
     public String modify(@RequestParam int stuNum, ScoreRequestDTO dto, Model model) {
+        System.out.println("/score/modify : POST!");
         Score score = repository.findByStuNum(stuNum);
         score.changeScore(dto);
         model.addAttribute("s", score);
         return "redirect:/score/detail?stuNum=" + stuNum; //상세보기 페이지로 리다이렉트
+    }
+
+    //똑같은 코드 추출 ctrl alt m
+    private void extracted(int stuNum, Model model) {
+        Score s = repository.findByStuNum(stuNum);
+        model.addAttribute("s", s);
     }
 }
