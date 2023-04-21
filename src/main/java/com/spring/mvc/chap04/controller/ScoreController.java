@@ -6,6 +6,7 @@ import com.spring.mvc.chap04.dto.ScoreRequestDTO;
 import com.spring.mvc.chap04.entity.Score;
 import com.spring.mvc.chap04.repository.ScoreRepository;
 import com.spring.mvc.chap04.repository.ScoreRepositoryImpl;
+import com.spring.mvc.chap04.service.ScoreService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ import java.util.stream.Collectors;
 
 /*
     #요청 URL
-    1. 학생 성적정보 등록화며니을 보여주고 성적정보 목록조회 처리
+    1. 학생 성적정보 등록화면을 보여주고 성적정보 목록조회 처리
     - /score/list : GET
 
     2. 성적 정보 등록 처리 요청
@@ -36,7 +37,7 @@ import java.util.stream.Collectors;
     -  /score/detail : GET
 
     5. 성적정보 수정
-    - /score/???    : GET
+    - /score/modify   : GET
  */
 
 @Controller
@@ -47,7 +48,9 @@ public class ScoreController {
 
     //저장소에 의존해야 데이터를 받아서 클라이언트에게 응답할 수 있음
     //의존성 주입 받아야 함
-    private final ScoreRepository repository;
+//    private final ScoreRepository repository;
+
+    private final ScoreService scoreService;  //service에 의존
 
     //만약에 클래스의 생성자가 단 1개라면
     // 자동으로 @Autowired 써줌
@@ -63,15 +66,16 @@ public class ScoreController {
         System.out.println("/score/list : GET!");
         System.out.println("정렬 요구사항: " + sort);
 
-        List<Score> scoreList = repository.findAll(sort);
+//        List<Score> scoreList = repository.findAll(sort);
+//
+//        //scoreList에서 원하는 정보만 추출하고 이름을 마스킹해서
+//        // 다시 DTO 리스트로 변환해줌
+//        List<ScoreListResponseDTO> dto
+//                = scoreList.stream().map(ScoreListResponseDTO::new).collect(Collectors.toList());
 
-        //scoreList에서 원하는 정보만 추출하고 이름을 마스킹해서
-        // 다시 DTO 리스트로 변환해줌
-        List<ScoreListResponseDTO> dto
-                = scoreList.stream().map(ScoreListResponseDTO::new).collect(Collectors.toList());
+        List<ScoreListResponseDTO> responseDTOList = scoreService.getList(sort);
 
-
-        model.addAttribute("sList", dto);
+        model.addAttribute("sList", responseDTOList);
 
         return "chap04/score-list";
     }
@@ -83,14 +87,16 @@ public class ScoreController {
         // 입력데이터 (쿼리스트링) 읽기
 
         System.out.println("/score/register : POST! - " + dto);
+//
+//        // dto(ScoreDTO)를 entity(Score)로 변환해야 함
+//        // controller에서 직접 뽑을 수도 있지만
+//        // 그러면 여기서 setter로 일일이 뽑아야 하므로 객체지향적이지 않음
+//        Score score = new Score(dto);
+//
+//        //save 명령
+//        repository.save(score);
 
-        // dto(ScoreDTO)를 entity(Score)로 변환해야 함
-        // controller에서 직접 뽑을 수도 있지만
-        // 그러면 여기서 setter로 일일이 뽑아야 하므로 객체지향적이지 않음
-        Score score = new Score(dto);
-
-        //save 명령
-        repository.save(score);
+        scoreService.insertScore(dto);
 
         /*
          * 등록요청해서 JSP 뷰 포워딩을 하면
@@ -111,7 +117,9 @@ public class ScoreController {
     public String remove(@RequestParam int stuNum) {
         System.out.println("/score/remove : GET!");
 
-        repository.deleteByStuNum(stuNum);
+//        repository.deleteByStuNum(stuNum);
+        scoreService.delete(stuNum);
+
         return "redirect:/score/list";
     }
 
@@ -136,15 +144,17 @@ public class ScoreController {
     @PostMapping("/modify")
     public String modify(@RequestParam int stuNum, ScoreRequestDTO dto, Model model) {
         System.out.println("/score/modify : POST!");
-        Score score = repository.findByStuNum(stuNum);
+//        Score score = repository.findByStuNum(stuNum);
+//        model.addAttribute("s", score);
+        Score score = scoreService.retrieve(stuNum);
         score.changeScore(dto);
-        model.addAttribute("s", score);
         return "redirect:/score/detail?stuNum=" + stuNum; //상세보기 페이지로 리다이렉트
     }
 
     //똑같은 코드 추출 ctrl alt m
     private void extracted(int stuNum, Model model) {
-        Score s = repository.findByStuNum(stuNum);
+//        Score s = repository.findByStuNum(stuNum);
+        Score s = scoreService.retrieve(stuNum);
         model.addAttribute("s", s);
     }
 }
