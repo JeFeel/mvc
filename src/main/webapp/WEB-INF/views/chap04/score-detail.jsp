@@ -46,6 +46,7 @@
             </ul>
             <button id="go-to-list" type="button">목록</button>
             <button id="modify" type="button">수정</button>
+
         </section>
     </div>
     <script>
@@ -57,6 +58,7 @@
         const $modify = document.getElementById('modify');
         $modify.addEventListener("click", e => {
             window.location.href = '/score/modify?stuNum=${s.stuNum}';
+            <%--특정 대상에 대해서 수정을 해야되니 데이터베이스 경유하여 수정화면 요청--%>
         })
     </script>
 </body>
