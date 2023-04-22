@@ -51,6 +51,6 @@ public class Score {
 
     private void calcTotalAndAvg() {
         this.total = kor + eng + math;
-        this.average = total / 3.0;
+        this.average = Math.round((total/ 3.0)*100)/100.0;  //소숫점 둘째 자리까지만 표현
     }
 }
