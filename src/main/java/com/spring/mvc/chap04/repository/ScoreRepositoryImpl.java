@@ -6,17 +6,15 @@ import com.spring.mvc.chap04.entity.Score;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.*;
+import java.util.*;
 
 import static com.spring.mvc.chap04.entity.Grade.A;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
 
 
-@Repository // 스프링 빈 등록 : 객체의 생성의 제어권을 스프링에게 위임
+@Repository("memory") // 스프링 빈 등록 : 객체의 생성의 제어권을 스프링에게 위임
 public class ScoreRepositoryImpl implements ScoreRepository {
 
     // key: 학번, value: 성적정보
