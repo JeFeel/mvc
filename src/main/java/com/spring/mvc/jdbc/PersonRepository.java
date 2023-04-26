@@ -38,7 +38,7 @@ public class PersonRepository {
             // SQL을 실행해주는 객체 얻기
             String sql = "INSERT INTO person " +
                     "(person_name, person_age) " +
-                    "VALUES (?, ?)";
+                    "VALUES (?, ?)"; //브라우저에서 입력받을 데이터 부분을 ? 처리
             PreparedStatement pstmt = conn.prepareStatement(sql);
 
             // ?값 세팅하기
@@ -64,7 +64,7 @@ public class PersonRepository {
                 e.printStackTrace();
             }
             e.printStackTrace();
-        } finally {
+        } finally { //쓴 커넥션 반납
             if (conn != null) {
                 try {
                     conn.close();
@@ -165,7 +165,7 @@ public class PersonRepository {
         List<Person> people = new ArrayList<>();
         // try - with - resource : close 자동화 (AutoClosable)
         try (Connection conn = DriverManager.getConnection(url, username, password)){
-
+        //위처럼 try 안에 쓰면 auto closablez`
             conn.setAutoCommit(false);
 
             String sql = "SELECT * FROM person";
@@ -183,7 +183,7 @@ public class PersonRepository {
 
                 Person p = new Person(id, name, age);
 //                System.out.println("p = " + p);
-                people.add(p);
+                people.add(p); //people 리스트에 추가
             }
         } catch (Exception e){
             e.printStackTrace();
@@ -214,9 +214,9 @@ public class PersonRepository {
                 String name = rs.getString("person_name");
                 int age = rs.getInt("person_age");
 
-                Person p = new Person(pid, name, age);
-//                System.out.println("p = " + p);
-                return p;
+//                Person p = new Person(pid, name, age);
+//                return p;
+                return new Person(pid, name, age); //인라인화
             }
         } catch (Exception e){
             e.printStackTrace();

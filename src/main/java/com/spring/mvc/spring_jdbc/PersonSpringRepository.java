@@ -42,10 +42,25 @@ public class PersonSpringRepository {
         return result==1;
     }
     
-    // 전제 조회 기능
+    // 전제 조회 기능☆☆☆
     public List<Person> findAll(){
         String sql = "SELECT * FROM person";
+//        List<Person> personList = jdbcTemplate.query(sql, (rs, rowNum) ->  new Person(rs)); //람다식
+////                Person p = new Person(rs);
+//////                p.setId(rs.getLong("id"));
+//////                p.setPersonName(rs.getString("person_name"));
+//////                p.setPersonAge(rs.getInt("person_age"));
+////                //여기다 다 쓰면 거추장스러우니 Person 클래스에 넘겨주자
+////
+////                return p;
+//
+////            return new Person(rs);  //인라인화 -> 람다식으로 줄여줌
+//
+//
+//        return personList; //-> 마무리로 인라인화
 
+
+        //RowMapper를 사용하면, 원하는 형태의 결과값을 반환할 수 있다.
         return jdbcTemplate.query(sql, (rs, rowNum) -> new Person(rs));
     }
     
@@ -53,9 +68,7 @@ public class PersonSpringRepository {
     // 개별 조회 기능
     public Person findOne(long id){
         String sql="SELECT * FROM person WHERE id=? ";
-        return jdbcTemplate.queryForObject(sql,
-                (rs, n)-> new Person(rs)
-                , id);
+        return jdbcTemplate.queryForObject(sql, (rs, n)-> new Person(rs), id);
     }
     
 }

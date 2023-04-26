@@ -60,7 +60,7 @@ public class ScoreJdbcRepository implements ScoreRepository{
             String sql = "INSERT INTO tbl_score " +
                     " (name, kor, eng, math, total, avg, grade) " +
                     " VALUES (?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
+            PreparedStatement pstmt = conn.prepareStatement(sql);   //sql 실행 객체 pstmt
 
             pstmt.setString(1, score.getName());
             pstmt.setInt(2, score.getKor());
