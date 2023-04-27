@@ -3,13 +3,10 @@ package com.spring.mvc.chap04.repository;
 
 import com.spring.mvc.chap04.dto.ScoreRequestDTO;
 import com.spring.mvc.chap04.entity.Score;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
-import java.sql.*;
 import java.util.*;
 
-import static com.spring.mvc.chap04.entity.Grade.A;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
 
@@ -89,6 +86,10 @@ public class ScoreRepositoryImpl implements ScoreRepository {
     @Override
     public Score findByStuNum(int stuNum) {
         return scoreMap.get(stuNum);
+    }
+
+    @Override
+    public void modifyByStuNum(Score score) {
     }
 
 

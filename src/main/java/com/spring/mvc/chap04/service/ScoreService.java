@@ -4,7 +4,7 @@ package com.spring.mvc.chap04.service;
 import com.spring.mvc.chap04.dto.ScoreListResponseDTO;
 import com.spring.mvc.chap04.dto.ScoreRequestDTO;
 import com.spring.mvc.chap04.entity.Score;
-import com.spring.mvc.chap04.repository.ScoreRepository;
+import com.spring.mvc.chap04.repository.ScoreMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -19,10 +19,12 @@ import java.util.stream.Collectors;
 @Service //서비스 bean 등록
 public class ScoreService {
 
-    private final ScoreRepository scoreRepository;
+//    private final ScoreRepository scoreRepository;
+
+    private final ScoreMapper scoreRepository;
 
     @Autowired
-    public ScoreService(@Qualifier("spring") ScoreRepository scoreRepository) {
+    public ScoreService(ScoreMapper scoreRepository) {
         this.scoreRepository = scoreRepository;
     }
 
@@ -68,5 +70,10 @@ public class ScoreService {
         //만약에 스코어 전체 말고
         // 몇개만 추리고 전후처리해서 줌
         return scoreRepository.findByStuNum(stuNum);
+    }
+
+    // 수정처리
+    public void modify(Score score) {
+        scoreRepository.modifyByStuNum(score);
     }
 }

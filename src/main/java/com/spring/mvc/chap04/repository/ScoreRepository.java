@@ -18,7 +18,7 @@ public interface ScoreRepository {
         return null;
     }; //default 주면 오버라이딩 강제x
 
-    // 성정 정보 등록
+    // 성적 정보 등록
     boolean save(Score score);
 
     // 성적 정보 1개 삭제
@@ -27,4 +27,6 @@ public interface ScoreRepository {
     // 성적 정보 개별 조회
     Score findByStuNum(int stuNum);
 
+    // 성적 정보 수정
+    void modifyByStuNum(Score score);
 }

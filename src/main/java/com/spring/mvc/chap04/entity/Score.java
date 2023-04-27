@@ -14,6 +14,7 @@ import java.sql.SQLException;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Score {
 
     private String name;    //학생 이름
@@ -21,7 +22,7 @@ public class Score {
 
     //서버가 만들어야되는 데이터 (서버가 계산)
     private int stuNum; //학번
-    private int total; //총점
+    private int total; //총점\
     private double average; //평균
     private Grade grade; // 학점
 

@@ -131,4 +131,8 @@ public class ScoreJdbcRepository implements ScoreRepository{
         }
         return null;
     }
+
+    @Override
+    public void modifyByStuNum(Score score) {
+    }
 }
