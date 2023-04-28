@@ -1,5 +1,6 @@
 package com.spring.mvc.chap05.entity;
 
+import com.spring.mvc.chap05.dto.BoardRewriteRequestDTO;
 import com.spring.mvc.chap05.dto.BoardWriteRequestDTO;
 import lombok.*;
 
@@ -34,6 +35,13 @@ public class Board {
     }
 
     public Board(BoardWriteRequestDTO dto) {
+        this.title = dto.getTitle();
+        this.content = dto.getContent();
+        this.regDateTime = LocalDateTime.now();
+    }
+
+    public Board(BoardRewriteRequestDTO dto) {
+        this.boardNo = dto.getBoardNo();
         this.title = dto.getTitle();
         this.content = dto.getContent();
         this.regDateTime = LocalDateTime.now();

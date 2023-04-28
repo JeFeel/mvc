@@ -22,4 +22,7 @@ public interface BoardMapper {
 
     // 조회수 상승
     void upViewCount(int boardNo);
+
+    // 게시물 수정
+    boolean modify(Board board);
 }

@@ -2,6 +2,7 @@ package com.spring.mvc.chap05.service;
 
 import com.spring.mvc.chap05.dto.BoardDetailResponseDTO;
 import com.spring.mvc.chap05.dto.BoardListResponseDTO;
+import com.spring.mvc.chap05.dto.BoardRewriteRequestDTO;
 import com.spring.mvc.chap05.dto.BoardWriteRequestDTO;
 import com.spring.mvc.chap05.entity.Board;
 import com.spring.mvc.chap05.repository.BoardMapper;
@@ -50,4 +51,11 @@ public class BoardService {
 
         return new BoardDetailResponseDTO(board);
     }
+
+    // 글 수정 처리
+    public boolean modify(BoardRewriteRequestDTO dto) {
+        return boardRepository.modify(new Board(dto));
+    }
+
+
 }

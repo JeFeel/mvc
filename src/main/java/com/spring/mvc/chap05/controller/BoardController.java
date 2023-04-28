@@ -1,7 +1,9 @@
 package com.spring.mvc.chap05.controller;
 
 import com.spring.mvc.chap05.dto.BoardListResponseDTO;
+import com.spring.mvc.chap05.dto.BoardRewriteRequestDTO;
 import com.spring.mvc.chap05.dto.BoardWriteRequestDTO;
+import com.spring.mvc.chap05.entity.Board;
 import com.spring.mvc.chap05.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -36,6 +38,21 @@ public class BoardController {
         return "chap05/write";
     }
 
+    // 수정하기 화면 조회 요청
+    @GetMapping("/rewrite")
+    public String rewrite(int boardNo, Model model) {
+        System.out.println("/board/rewrite : GET");
+        model.addAttribute("boardNo", boardNo);
+        return "chap05/rewrite";
+    }
+
+    // 글 수정 요청 처리
+    @PostMapping("/rewrite")
+    public String rewrite(BoardRewriteRequestDTO dto){
+        System.out.println("/board/rewrite : POST");
+        boardService.modify(dto);
+        return "redirect:/board/list";
+    }
     // 글 등록 요청 처리
     @PostMapping("/write")
     public String write(BoardWriteRequestDTO dto) {
