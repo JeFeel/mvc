@@ -45,7 +45,7 @@ public class ScoreSpringRepository implements ScoreRepository {
         return jdbcTemplate.update(sql,
                 score.getName(), score.getKor(),
                 score.getEng(), score.getMath(),
-                score.getTotal(), score.getAverage(),
+                score.getTotal(), score.getAvg(),
                 String.valueOf(score.getGrade())) == 1;
     }
 

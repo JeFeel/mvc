@@ -14,13 +14,13 @@ import lombok.ToString;
 public class ScoreListResponseDTO {
     private final int stuNum;
     private final String maskingName; //첫 글자 빼고 *처리
-    private final double average;
+    private final double avg;
     private final Grade grade;
 
     public ScoreListResponseDTO(Score s){
         this.stuNum = s.getStuNum();
         this.maskingName  = makeMaskingName(s.getName());
-        this.average = s.getAverage();
+        this.avg = s.getAvg();
         this.grade = s.getGrade();
     }
 

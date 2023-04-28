@@ -23,7 +23,7 @@ public class Score {
     //서버가 만들어야되는 데이터 (서버가 계산)
     private int stuNum; //학번
     private int total; //총점\
-    private double average; //평균
+    private double avg; //평균
     private Grade grade; // 학점
 
     public Score(ScoreRequestDTO dto) {
@@ -38,7 +38,7 @@ public class Score {
         this.eng = rs.getInt("eng");
         this.math = rs.getInt("math");
         this.total = rs.getInt("total");
-        this.average = rs.getDouble("avg");
+        this.avg = rs.getDouble("avg");
         this.grade = Grade.valueOf(rs.getString("grade"));
     }
 
@@ -51,13 +51,13 @@ public class Score {
     }
 
     private void calcGrade() {
-        if (average >= 90) {
+        if (avg >= 90) {
             this.grade = Grade.A;
-        } else if (average >= 80) {
+        } else if (avg >= 80) {
             this.grade = Grade.B;
-        } else if (average >= 70) {
+        } else if (avg >= 70) {
             this.grade = Grade.C;
-        } else if (average >= 60) {
+        } else if (avg >= 60) {
             this.grade = Grade.D;
         } else {
             this.grade = Grade.F;
@@ -66,6 +66,6 @@ public class Score {
 
     private void calcTotalAndAvg() {
         this.total = kor + eng + math;
-        this.average = Math.round((total/ 3.0)*100)/100.0;  //소숫점 둘째 자리까지만 표현
+        this.avg = Math.round((total/ 3.0)*100)/100.0;  //소숫점 둘째 자리까지만 표현
     }
 }

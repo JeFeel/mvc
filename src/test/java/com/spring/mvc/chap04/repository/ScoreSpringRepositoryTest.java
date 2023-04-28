@@ -1,7 +1,6 @@
 package com.spring.mvc.chap04.repository;
 
 
-import com.spring.mvc.chap04.entity.Grade;
 import com.spring.mvc.chap04.entity.Score;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,7 @@ class ScoreSpringRepositoryTest {
         s.setEng(50);
         s.setMath(50);
         s.setTotal(150);
-        s.setAverage(50);
+        s.setAvg(50);
         s.setGrade(C);
         //when
         boolean flag = repository.save(s);

@@ -67,7 +67,7 @@ public class ScoreJdbcRepository implements ScoreRepository{
             pstmt.setInt(3, score.getEng());
             pstmt.setInt(4, score.getMath());
             pstmt.setInt(5, score.getTotal());
-            pstmt.setDouble(6, score.getAverage());
+            pstmt.setDouble(6, score.getAvg());
             pstmt.setString(7, String.valueOf(score.getGrade()));
 
             int result = pstmt.executeUpdate(); // 성공시 1, 실패시 0

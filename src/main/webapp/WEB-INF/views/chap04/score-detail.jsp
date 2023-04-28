@@ -41,7 +41,7 @@
                 <li># 영어: ${s.eng}점</li>
                 <li># 수학: ${s.math}점</li>
                 <li># 총점: ${s.total}점</li>
-                <li># 평균: ${s.average}점</li>
+                <li># 평균: ${s.avg}점</li>
                 <li># 학점: ${s.grade}점</li>
             </ul>
             <button id="go-to-list" type="button">목록</button>
