@@ -17,6 +17,15 @@ public class Board {
     private int viewCount; // 조회수
     private LocalDateTime regDateTime; // 작성일자시간
 
+    /*
+    * create table tbl_board (
+   board_no int(10) auto_increment primary key,
+   title VARCHAR(80) not null,
+   content VARCHAR(2000),
+   view_count int(10) default 0,
+   reg_date_time DATETIME default current_timestamp
+    );*/
+
     public Board(int boardNo, String title, String content) {
         this.boardNo = boardNo;
         this.title = title;
