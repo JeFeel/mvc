@@ -9,7 +9,7 @@
     <insert id="save">
         INSERT INTO tbl_score
         (name, kor, eng, math, total, avg, grade)
-        VALUES (#{name}, #{kor}, #{eng}, #{math} , #{total}, #{average}, #{grade})
+        VALUES (#{name}, #{kor}, #{eng}, #{math}, #{total}, #{avg}, #{grade})
     </insert>
 <!--    정보 삭제-->
 
@@ -20,24 +20,33 @@
 <!--    정보 수정-->
     <update id="modifyByStuNum">
         UPDATE tbl_score
-        SET kor = #{kor}, eng = #{eng}, math = #{math}, total = #{total}, avg = #{average}, grade= #{grade}
+        SET kor = #{kor}, eng = #{eng}, math = #{math}, total = #{total}, avg = #{avg}, grade= #{grade}
         WHERE stu_num = #{stuNum}
     </update>
 <!--    정보 전제조회-->
 <!--    정보 개별조회-->
 <!--    매핑은 이름 다른 경우에만! 사용. 나머지는 자동으로 처리해줌 -->
-    <resultMap id="score" type="com.spring.mvc.chap04.entity.Score">
+<!--    <resultMap id="score" type="com.spring.mvc.chap04.entity.Score">-->
 
-        <result property="stuNum" column="stu_num"/>
-        <result property="average" column="avg"/>
+<!--        <result property="stuNum" column="stu_num"/>-->
+<!--        <result property="average" column="avg"/>-->
 
-    </resultMap>
+<!--    </resultMap>-->
 
-    <select id="findAll" resultMap="score">
+    <select id="findAll" resultType="score">
         SELECT * FROM tbl_score
+        <if test="sort == 'num'">
+            ORDER BY stu_num
+        </if>
+        <if test="sort == 'name'">
+            ORDER BY name
+        </if>
+        <if test="sort == 'avg'">
+            ORDER BY avg DESC
+        </if>
     </select>
 
-    <select id="findByStuNum" resultMap="score">
+    <select id="findByStuNum" resultType="score">
         SELECT * FROM tbl_score
         WHERE stu_num = #{stuNum}
     </select>
