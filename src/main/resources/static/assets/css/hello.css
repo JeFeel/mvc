@@ -1,6 +1,21 @@
 
-h1{
+container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-content: center;
+    width: 70%;
+    background: #ccc;
+    position: absolute;
+    left: 10%;
+    line-height: 2;
+
+}
+
+container h1{
     font-size: 25px;
-    background: forestgreen;
+    background: #007bff;
+    width: fit-content;
     color: orange;
 }
