@@ -5,10 +5,13 @@ container {
     justify-content: center;
     flex-wrap: wrap;
     align-content: center;
-    width: 70%;
+    /*width: 70%;*/
     background: #ccc;
     position: absolute;
-    left: 10%;
+    /*margin: 20px;*/
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     line-height: 2;
 
 }
@@ -18,4 +21,7 @@ container h1{
     background: #007bff;
     width: fit-content;
     color: orange;
+}
+container div{
+    font-size: 20px;
 }
