@@ -25,7 +25,7 @@ public class ControllerV2 {
         String name = "멍멍이";
         List<String> hobbies = List.of("산책", "밥먹기", "낮잠자기");
         //jsp로 보낼 데이터를 모델에 담는다
-        model.addAttribute("n", name);
+        model.addAttribute("n", name);  // 두 개의 파라미터:  속성명, 속성값)
         model.addAttribute("hList", hobbies);
         // WEB-INF/views/chap02/hobbies.jsp
         return  "chap02/hobbies";
