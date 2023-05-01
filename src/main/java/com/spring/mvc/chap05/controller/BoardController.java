@@ -3,9 +3,12 @@ package com.spring.mvc.chap05.controller;
 import com.spring.mvc.chap05.dto.BoardListResponseDTO;
 import com.spring.mvc.chap05.dto.BoardRewriteRequestDTO;
 import com.spring.mvc.chap05.dto.BoardWriteRequestDTO;
+import com.spring.mvc.chap05.dto.page.Page;
+import com.spring.mvc.chap05.dto.page.PageMaker;
 import com.spring.mvc.chap05.entity.Board;
 import com.spring.mvc.chap05.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,17 +20,25 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/board")
+@Slf4j
 public class BoardController {
 
     private final BoardService boardService;
 
     // 목록 조회 요청
     @GetMapping("/list")
-    public String list(Model model) {
-        System.out.println("/board/list : GET");
+    public String list(Page page, Model model) {
+        log.info("/board/list : GET");
+        log.info("page: {}", page);
         List<BoardListResponseDTO> responseDTOS
-                = boardService.getList();
+                = boardService.getList(page);
+
+        // 페이징 알고리즘 작동
+        PageMaker maker = new PageMaker(page, boardService.getCount());
+
         model.addAttribute("bList", responseDTOS);
+        model.addAttribute("maker", maker);
+
         return "chap05/list";
     }
 
