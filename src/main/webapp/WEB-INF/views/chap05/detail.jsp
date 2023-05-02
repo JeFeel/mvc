@@ -122,7 +122,12 @@
         <div id="content">${b.content}</div>
         <div class="buttons">
             <button class="write-btn" type="button" onclick="window.location.href='/board/rewrite?boardNo=${b.boardNo}'">수정</button>
-            <button class="list-btn" type="button" onclick="window.location.href='/board/list'">목록</button>
+            <button class="list-btn" type="button" onclick="window.location.href='/board/list?pageNo=${s.pageNo}&type=${s.type}&keyword=${s.keyword}'">목록</button>
+        </div>
+
+    </div>
+</body>
+</html>
         </div>
 
     </div>

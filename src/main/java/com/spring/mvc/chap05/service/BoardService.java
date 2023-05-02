@@ -4,15 +4,13 @@ import com.spring.mvc.chap05.dto.BoardDetailResponseDTO;
 import com.spring.mvc.chap05.dto.BoardListResponseDTO;
 import com.spring.mvc.chap05.dto.BoardRewriteRequestDTO;
 import com.spring.mvc.chap05.dto.BoardWriteRequestDTO;
-import com.spring.mvc.chap05.dto.page.Page;
+import com.spring.mvc.chap05.dto.page.Search;
 import com.spring.mvc.chap05.entity.Board;
 import com.spring.mvc.chap05.repository.BoardMapper;
-import com.spring.mvc.chap05.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.*;
 
@@ -25,7 +23,7 @@ public class BoardService {
 
     // 중간처리 기능 자유롭게 사용
     // 목록 중간처리
-    public List<BoardListResponseDTO> getList(Page page) {
+    public List<BoardListResponseDTO> getList(Search page) {
 
         return boardRepository.findAll(page)
                 .stream()
@@ -59,7 +57,7 @@ public class BoardService {
     }
 
 
-    public int getCount() {
-        return boardRepository.count();
+    public int getCount(Search search) {
+        return boardRepository.count(search);
     }
 }
