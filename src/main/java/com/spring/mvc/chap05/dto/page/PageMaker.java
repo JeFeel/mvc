@@ -18,10 +18,10 @@ public class PageMaker {
     private boolean prev, next;
 
     // 현재 요청 페이지 정보
-    private Page page;
+    private final Page page;
 
     // 총 게시물 수
-    private int totalCount;
+    private final int totalCount;
 
     public PageMaker(Page page, int totalCount) {
         this.page = page;
