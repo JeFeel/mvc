@@ -26,10 +26,10 @@ public class Page {
     }
 
     public void setAmount(int amount) {
-        if (amount < 6 || amount > 10) {
-            this.amount = 6;
-            return;
-        }
+//        if (amount < 6 || amount > 10) {
+//            this.amount = 6;
+//            return;
+//        }
         this.amount = amount;
     }
 
