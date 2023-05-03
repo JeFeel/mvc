@@ -7,6 +7,7 @@ import com.spring.mvc.chap05.dto.page.Page;
 import com.spring.mvc.chap05.dto.page.PageMaker;
 import com.spring.mvc.chap05.dto.page.Search;
 import com.spring.mvc.chap05.entity.Board;
+import com.spring.mvc.chap05.repository.BoardMapper;
 import com.spring.mvc.chap05.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +27,7 @@ import java.util.List;
 public class BoardController {
 
     private final BoardService boardService;
+    private final BoardMapper mapper;
 
     // 목록 조회 요청
     @GetMapping("/list")
@@ -56,8 +58,15 @@ public class BoardController {
     @GetMapping("/rewrite")
     public String rewrite(BoardRewriteRequestDTO dto, @ModelAttribute("s") Search search, Model model) {
         System.out.println("/board/rewrite : GET");
-        model.addAttribute("bno", dto.getBoardNo());
-        model.addAttribute("title", dto.getTitle());
+        //전달받은 글번호 가지고 findOne()으로 db조회
+        //조회된 정보를 model에 뿌려줌
+
+        Board b = mapper.findOne(dto.getBoardNo());
+
+        model.addAttribute("bno", b.getBoardNo());
+        model.addAttribute("title", b.getTitle());
+        model.addAttribute("content", b.getContent());
+
         System.out.println("dto = " + dto);
         return "chap05/rewrite";
     }
