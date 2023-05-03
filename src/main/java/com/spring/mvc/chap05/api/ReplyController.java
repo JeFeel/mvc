@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/replies")
+@RequestMapping("/api/v1/replies")
 @Slf4j
 public class ReplyController {
 
