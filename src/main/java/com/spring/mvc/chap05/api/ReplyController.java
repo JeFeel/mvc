@@ -2,6 +2,7 @@ package com.spring.mvc.chap05.api;
 
 
 import com.spring.mvc.chap05.dto.ReplyListResponseDTO;
+import com.spring.mvc.chap05.dto.ReplyModifyRequestDTO;
 import com.spring.mvc.chap05.dto.ReplyPostRequestDTO;
 import com.spring.mvc.chap05.dto.page.Page;
 import com.spring.mvc.chap05.entity.Reply;
@@ -98,5 +99,28 @@ public class ReplyController {
 
     }
 
+    // 댓글 수정 요청
+    //DTO 새로 만들고 검증도 넣어라
+    @RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH})
+    public ResponseEntity<?> modify(
+            @Validated @RequestBody ReplyModifyRequestDTO dto,
+            BindingResult result
+    ) {
+        if (result.hasErrors()) { // Validate에 걸리면
+            return ResponseEntity.badRequest()
+                    .body(result.toString());
+        }
 
+        log.info("api/v1/replies/ PUT!");
+        try {
+            ReplyListResponseDTO responseDTO = replyService.modify(dto);
+            //(성공시) 클라이언트에 응답하기
+            return ResponseEntity.ok().body(responseDTO);
+        } catch (Exception e) {
+            log.warn("Status code response!! caused by: {} ", e.getMessage());
+            return ResponseEntity.internalServerError()
+                    .body(e.getMessage());
+        }
+
+    }
 }
