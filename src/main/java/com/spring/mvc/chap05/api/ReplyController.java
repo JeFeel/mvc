@@ -34,7 +34,7 @@ public class ReplyController {
     public ResponseEntity<?> list(
             @PathVariable long boardNo,
             @PathVariable int pageNo
-    ){
+    ) {
         log.info("/api/v1/replies/{}/page/{} : GET! ", boardNo, pageNo);
         Page page = new Page();
         page.setPageNo(pageNo);
@@ -52,9 +52,9 @@ public class ReplyController {
             //요청 메세지 바디에 JSON으로 보내주세요
             @Validated @RequestBody ReplyPostRequestDTO dto
             , BindingResult result //검증결과를 가진 객체
-    ){
+    ) {
         // 입력값 검증에 걸리면 4xx 상태코드 리턴
-        if(result.hasErrors()) { // Validate에 걸리면
+        if (result.hasErrors()) { // Validate에 걸리면
             return ResponseEntity.badRequest()
                     .body(result.toString());
         }
@@ -65,11 +65,33 @@ public class ReplyController {
         //서비스에 비즈니스 로직 처리 위임
         try {
             ReplyListResponseDTO responseDTO = replyService.register(dto);
-          //(성공시) 클라이언트에 응답하기
+            //(성공시) 클라이언트에 응답하기
             return ResponseEntity.ok().body(responseDTO);
         } catch (Exception e) {
             // 문제발생 상황을 클라이언트에게 전달
             log.warn("500 Status code response!! caused by: {} ", e.getMessage());
+            return ResponseEntity.internalServerError()
+                    .body(e.getMessage());
+        }
+
+    }
+
+    // 댓글 삭제 요청
+    @DeleteMapping("/{replyNo}")
+    public ResponseEntity<?> remove(
+            @PathVariable(required = false) Long replyNo
+    ) {
+        if (replyNo == null) {
+            return ResponseEntity.badRequest().body("댓글 번호를 보내주세요!");
+        }
+        log.info("/api/v1/replies/{} DELETE!", replyNo);
+
+        try {
+            ReplyListResponseDTO responseDTO
+                    = replyService.delete(replyNo);
+            return ResponseEntity.ok()
+                    .body(responseDTO);
+        } catch (Exception e) {
             return ResponseEntity.internalServerError()
                     .body(e.getMessage());
         }
