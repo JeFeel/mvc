@@ -23,6 +23,10 @@ public class Reply {
 //    references tbl_board (board_no)
 //    on delete cascade
 
+
+    //엔터티의 역할: DB랑 연결
+    //DTO의 역할: 클라이언트랑 연결
+
     private long replyNo;
     private String replyText;
     private String replyWriter;
