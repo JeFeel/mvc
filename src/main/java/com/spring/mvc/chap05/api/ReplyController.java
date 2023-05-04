@@ -22,6 +22,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/replies")
 @Slf4j
+@CrossOrigin(origins = "http://localhost:63342/") //클라이언트의 접근을 어떤 app에서만 허용
 public class ReplyController {
     //엔터티의 역할: DB랑 연결
     //DTO의 역할: 클라이언트랑 연결
