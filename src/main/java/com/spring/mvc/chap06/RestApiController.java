@@ -27,14 +27,12 @@ public class RestApiController {
     @GetMapping("/foods")
     public List<String> foods(){
 //        String[] foodList = {"탕수육", "족발", "마라탕"};
-        List<String> foodList = List.of("탕수육", "족발", "마라탕");
-        return foodList;
+        return List.of("탕수육", "족발", "마라탕");
     }
 
     @GetMapping("/person")
     public Person person(){
-        Person p = new Person(1L, "루피", 3);
-        return p;
+        return new Person(1L, "루피", 3);
     }
 
     @GetMapping("/person-list")
