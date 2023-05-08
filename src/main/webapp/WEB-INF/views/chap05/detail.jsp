@@ -134,7 +134,7 @@
         <h1>${b.boardNo}번 게시물 내용~ </h1>
         <h2># 작성일자: ${b.date}</h2>
         <label for="title">제목</label>
-        <input type="text" id="title" name="title" value="${b.title}" readonly>
+        <input type="text" id="title" name="title" value="${b.title}">
         <label for="content">내용</label>
         <div id="content">${b.content}</div>
         <div class="buttons">
@@ -282,6 +282,7 @@
             $pageUl.dataset.fp = finalPage;
 
         }
+
         // 페이지 클릭 이벤트 핸들러
         function makePageButtonClickEvent() {
             // 페이지 버튼 클릭이벤트 처리
@@ -364,6 +365,66 @@
 
         }
 
+        // 댓글 등록 처리 이벤트 함수
+        function makeReplyRegisterClickEvent() {
+
+
+            const $regBtn = document.getElementById('replyAddBtn');
+            $regBtn.onclick = e => {
+                const $rt = document.getElementById('newReplyText');
+                const $rw = document.getElementById('newReplyWriter');
+
+                // console.log($rt.value);
+                // console.log($rw.value);
+
+                // client 입력값 검증
+                if ($rt.value.trim() === '') {
+                    alert('댓글 내용은 필수입니다');
+                    return;
+                } else if ($rw.value.trim() === '') {
+                    alert('댓글 작성자 이름은 필수입니다');
+                    return;
+                } else if ($rw.value.trim().length < 2 || $rw.value.trim().length > 8) {
+                    alert('댓글 작성자 이름은 2~8자 사이로 작성하세요!');
+                    return;
+                }
+                // # 서버로 보낼 데이터
+                const payload = {
+                    text: $rt.value,
+                    author: $rw.value,
+                    bno: bno
+                };
+
+                // # GET방식을 제외하고 필요한 객체
+                const requestInfo = {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                };
+
+                // # 서버에 POST 요청 보내기
+                fetch(URL, requestInfo)
+                    .then(res => {
+                        if (res.status === 200) {
+                            alert('댓글이 정상 등록됨!');
+                            // 입력창 비우기
+                            $rt.value = '';
+                            $rw.value = '';
+                            // 마지막페이지번호 부르기
+                            const lastPageNo = document.querySelector('.pagination').dataset.fp;
+                            getReplyList(lastPageNo);
+                        } else {
+                            alert('댓글 등록 실패!');
+                        }
+                    });
+
+
+            }
+        }
+
+
         // 메인 실행부
         (function () {
             // 첫 댓글 페이지  불러오기
@@ -371,6 +432,9 @@
 
             // 페이지 버튼 이벤트 등록
             makePageButtonClickEvent();
+
+            // 댓글 등록 이벤트 등록
+            makeReplyRegisterClickEvent();
         })();
 
     </script>
