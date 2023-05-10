@@ -1,16 +1,22 @@
 package com.spring.mvc.chap05;
 
 
+import com.spring.mvc.chap05.dto.LoginRequestDTO;
 import com.spring.mvc.chap05.dto.SignUpRequestDTO;
+import com.spring.mvc.chap05.service.LoginResult;
 import com.spring.mvc.chap05.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import static com.spring.mvc.chap05.service.LoginResult.SUCCESS;
 
 
 @Controller
@@ -49,5 +55,42 @@ public class MemberController {
         return ResponseEntity.ok().body(flag);
     }
 
+
+    // 로그인 양식 요청
+    @GetMapping("/sign-in")
+    public String signIn(){
+
+        // 로그인 페이지 받기
+        log.info("/members/sign-ing GET - forwarding to jsp");
+        return "members/sign-in";
+    }
+
+    // 로그인 검증 요청
+    @PostMapping("/sign-in")
+    public String signIn(LoginRequestDTO dto,
+                         // 리다이렉트에서 2번째 응답에 데이터를 보내기 위함
+                         RedirectAttributes ra){
+        log.info("/members/sign-in POST - {}", dto);
+
+        LoginResult result = memberService.authenticate(dto);
+
+        // 로그인 성공시
+        if(result == SUCCESS){
+            return "redirect:/";
+        }
+
+        //로그인에 실패하면 에러 메세지 전달
+        //RestAPI 안 썼으니까 Model 활용
+//        model.addAttribute("msg", result);
+
+        // 1회용으로 쓰고 버릴 데이터
+        ra.addFlashAttribute("msg", result);
+
+        // 로그인 실패시
+        return "redirect:/members/sign-in";
+
+        //redirect : 요청 url 적는 곳
+        // 포워딩: jsp 파일 경로 적는곳
+    }
 }
 
