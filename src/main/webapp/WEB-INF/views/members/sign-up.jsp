@@ -11,7 +11,8 @@
     <%@include file="../include/static-head.jsp" %>
     <style>
         .container.wrap {
-            margin: 200px auto;
+            margin-top: 200px;
+            margin-bottom: 200px;
 
         }
     </style>
