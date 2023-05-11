@@ -24,15 +24,15 @@
     <%@ include file="include/header.jsp" %>
 
 
-    <h1 id="main-title">초보자님 안녕하세요~~</h1>
-
-    <c:if test="${flag}">
-        로그인하셨군요?
-    </c:if>
-
-    <script>
-        console.log('flag: ${flag}');
-    </script>
+    <h1 id="main-title">
+        <%-- session.getAttribute("login") --%>
+        <c:if test="${sessionScope.login==null}">
+           초보자님 안녕하세요
+        </c:if>
+        <c:if test="${sessionScope.login!=null}">
+            ${sessionScope.login.nickName}님 안녕하세요
+        </c:if>
+    </h1>
 
 </body>
 </html>

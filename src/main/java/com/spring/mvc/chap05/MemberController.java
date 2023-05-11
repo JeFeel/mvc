@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import static com.spring.mvc.chap05.service.LoginResult.SUCCESS;
 
@@ -61,19 +63,25 @@ public class MemberController {
 
     // 로그인 양식 요청
     @GetMapping("/sign-in")
-    public String signIn() {
+    public String signIn(HttpServletRequest request) {
+
+        // 요청 정보 헤더 안에 Referer 키값
+        // 페이지로 들어올 때 어디에서 왔는지에 대한 URI 정보 기록
+        String referer = request.getHeader("Referer");
+        log.info("referer: - {}", referer);
 
         // 로그인 페이지 받기
-        log.info("/members/sign-ing GET - forwarding to jsp");
+        log.info("/members/sign-in GET - forwarding to jsp");
         return "members/sign-in";
     }
 
     // 로그인 검증 요청
     @PostMapping("/sign-in")
-    public String signIn(LoginRequestDTO dto,
+    public String signIn(LoginRequestDTO dto
                          // 리다이렉트에서 2번째 응답에 데이터를 보내기 위함
-                         RedirectAttributes ra
-            , HttpServletResponse response) {
+            , RedirectAttributes ra
+            , HttpServletResponse response
+            , HttpServletRequest request) {
         log.info("/members/sign-in POST - {}", dto);
 
         LoginResult result = memberService.authenticate(dto);
@@ -81,14 +89,21 @@ public class MemberController {
         // 로그인 성공시
         if (result == SUCCESS) {
 
-            //쿠키 만들기
-            Cookie loginCookie = new Cookie("login", "메시아");
-            //쿠키 셋팅
-            loginCookie.setPath("/"); //아무데나 쿠키 들고 다녀라
-            loginCookie.setMaxAge(60 * 60 * 24); //쿠키 수명 지정
+            //서버에서 세션에 로그인 정보를 저장
+//            HttpSession session = request.getSession();
+//
+//            session.setAttribute("login", "메롱");
+            // 이 처리를 service에게 맡김
+            memberService.maintainLoginState(request.getSession(), dto.getAccount());
 
-            // 쿠키를 응답시에 실어서 클라이언트에게 전송
-            response.addCookie(loginCookie);
+//            //쿠키 만들기
+//            Cookie loginCookie = new Cookie("login", "메시아");
+//            //쿠키 셋팅
+//            loginCookie.setPath("/"); //아무데나 쿠키 들고 다녀라
+//            loginCookie.setMaxAge(60 * 60 * 24); //쿠키 수명 지정
+//
+//            // 쿠키를 응답시에 실어서 클라이언트에게 전송
+//            response.addCookie(loginCookie);
 
             return "redirect:/";
         }
@@ -106,5 +121,17 @@ public class MemberController {
         //redirect : 요청 url 적는 곳
         // 포워딩: jsp 파일 경로 적는곳
     }
-}
 
+    // 로그아웃 요청 처리
+    @GetMapping("/sign-out")
+    public String signOut(HttpSession session){
+        //세션에서 login 정보를 제거
+
+        session.removeAttribute("login");
+
+        // 세션 아예 초기화 (세션만료 시간)
+        session.invalidate();
+
+        return "redirect:/";
+    }
+}
