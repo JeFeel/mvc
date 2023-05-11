@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
 import static com.spring.mvc.chap05.service.LoginResult.SUCCESS;
 
 
@@ -49,7 +52,7 @@ public class MemberController {
     // 비동기 요청 처리
     @GetMapping("/check")
     @ResponseBody
-    public ResponseEntity<?> check(String type, String keyword){
+    public ResponseEntity<?> check(String type, String keyword) {
         log.info("/members/check?type={}&keyword{} ASYNC GET!", type, keyword);
         boolean flag = memberService.checkSignUpValue(type, keyword);
         return ResponseEntity.ok().body(flag);
@@ -58,7 +61,7 @@ public class MemberController {
 
     // 로그인 양식 요청
     @GetMapping("/sign-in")
-    public String signIn(){
+    public String signIn() {
 
         // 로그인 페이지 받기
         log.info("/members/sign-ing GET - forwarding to jsp");
@@ -69,13 +72,24 @@ public class MemberController {
     @PostMapping("/sign-in")
     public String signIn(LoginRequestDTO dto,
                          // 리다이렉트에서 2번째 응답에 데이터를 보내기 위함
-                         RedirectAttributes ra){
+                         RedirectAttributes ra
+            , HttpServletResponse response) {
         log.info("/members/sign-in POST - {}", dto);
 
         LoginResult result = memberService.authenticate(dto);
 
         // 로그인 성공시
-        if(result == SUCCESS){
+        if (result == SUCCESS) {
+
+            //쿠키 만들기
+            Cookie loginCookie = new Cookie("login", "메시아");
+            //쿠키 셋팅
+            loginCookie.setPath("/"); //아무데나 쿠키 들고 다녀라
+            loginCookie.setMaxAge(60 * 60 * 24); //쿠키 수명 지정
+
+            // 쿠키를 응답시에 실어서 클라이언트에게 전송
+            response.addCookie(loginCookie);
+
             return "redirect:/";
         }
 

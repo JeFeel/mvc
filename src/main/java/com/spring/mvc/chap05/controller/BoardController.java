@@ -1,5 +1,6 @@
 package com.spring.mvc.chap05.controller;
 
+
 import com.spring.mvc.chap05.dto.BoardListResponseDTO;
 import com.spring.mvc.chap05.dto.BoardRewriteRequestDTO;
 import com.spring.mvc.chap05.dto.BoardWriteRequestDTO;
@@ -18,7 +19,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+
 
 @Controller
 @RequiredArgsConstructor
@@ -31,7 +35,22 @@ public class BoardController {
 
     // 목록 조회 요청
     @GetMapping("/list")
-    public String list(Search page, Model model) {
+    public String list(
+            Search page
+            , Model model
+            , HttpServletRequest request) {
+
+        boolean flag =false;
+        //쿠키를 확인
+        Cookie[] cookies = request.getCookies();
+        for (Cookie c : cookies) {
+            if (c.getName().equals("login")){
+                flag = true;
+                break;
+            }
+        }
+        if (!flag) return "redirect:/members/sign-in";
+
         log.info("/board/list : GET");
         log.info("page: {}", page);
         List<BoardListResponseDTO> responseDTOS
@@ -73,11 +92,12 @@ public class BoardController {
 
     // 글 수정 요청 처리
     @PostMapping("/rewrite")
-    public String rewrite(BoardRewriteRequestDTO dto){
+    public String rewrite(BoardRewriteRequestDTO dto) {
         System.out.println("/board/rewrite : POST");
         boardService.modify(dto);
         return "redirect:/board/list";
     }
+
     // 글 등록 요청 처리
     @PostMapping("/write")
     public String write(BoardWriteRequestDTO dto) {
