@@ -21,6 +21,7 @@
             <span class="lnr lnr-cross"></span>
         </a>
         <ul>
+            <li><a href="/">Main Home</a></li>
             <li><a href="/home">Home</a></li>
             <li><a href="#">About</a></li>
             <li><a href="/board/list">Board</a></li>
