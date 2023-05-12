@@ -105,7 +105,7 @@ public class MemberController {
 //            // 쿠키를 응답시에 실어서 클라이언트에게 전송
 //            response.addCookie(loginCookie);
 
-            return "redirect:/";
+            return "redirect:/home";
         }
 
         //로그인에 실패하면 에러 메세지 전달
@@ -132,6 +132,6 @@ public class MemberController {
         // 세션 아예 초기화 (세션만료 시간)
         session.invalidate();
 
-        return "redirect:/";
+        return "redirect:/home";
     }
 }
