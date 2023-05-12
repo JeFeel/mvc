@@ -36,7 +36,7 @@ public class BoardService {
     public boolean register(BoardWriteRequestDTO dto) {
         return boardRepository.save(new Board(dto));
     }
-
+    // 글 삭제 처리
     public boolean delete(int bno) {
         return boardRepository.deleteByNo(bno);
     }
