@@ -26,4 +26,5 @@ public class Member {
     private String email;
     private Auth auth;
     private LocalDateTime regDate;
+    private LocalDateTime limitTime;
 }

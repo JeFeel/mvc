@@ -5,6 +5,7 @@ import com.spring.mvc.chap05.dto.LoginRequestDTO;
 import com.spring.mvc.chap05.dto.SignUpRequestDTO;
 import com.spring.mvc.chap05.service.LoginResult;
 import com.spring.mvc.chap05.service.MemberService;
+import com.spring.mvc.util.LoginUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import static com.spring.mvc.chap05.service.LoginResult.SUCCESS;
+import static com.spring.mvc.util.LoginUtil.*;
 
 
 @Controller
@@ -84,7 +86,7 @@ public class MemberController {
             , HttpServletRequest request) {
         log.info("/members/sign-in POST - {}", dto);
 
-        LoginResult result = memberService.authenticate(dto);
+        LoginResult result = memberService.authenticate(dto, request.getSession(), response);
 
         // 로그인 성공시
         if (result == SUCCESS) {
@@ -124,14 +126,27 @@ public class MemberController {
 
     // 로그아웃 요청 처리
     @GetMapping("/sign-out")
-    public String signOut(HttpSession session){
-        //세션에서 login 정보를 제거
+    public String signOut(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession();
 
-        session.removeAttribute("login");
+        // 로그인 중인지 확인
+        if (isLogin(session)) {
 
-        // 세션 아예 초기화 (세션만료 시간)
-        session.invalidate();
+            // 자동로그인 상태라면 해제한다
+                // 자동로그인 상태인지 확인
+            if(isAutoLogin(request)){
+                memberService.autoLoginClear(request, response);
+            }
 
-        return "redirect:/home";
+            //세션에서 login 정보를 제거
+            session.removeAttribute("login");
+
+            // 세션 아예 초기화 (세션만료 시간)
+            session.invalidate();
+            return "redirect:/home";
+
+        }
+        return "redirect:/members/sign-in";
     }
+
 }
