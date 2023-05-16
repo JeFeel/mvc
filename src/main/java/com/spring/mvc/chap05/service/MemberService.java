@@ -10,7 +10,6 @@ import com.spring.mvc.chap05.repository.MemberMapper;
 import com.spring.mvc.util.LoginUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cglib.core.Local;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.WebUtils;
@@ -34,14 +33,16 @@ public class MemberService {
     private final PasswordEncoder encoder;
 
     // 회원가입 처리 서비스
-    public boolean join(final SignUpRequestDTO dto) {
+    public boolean join(final SignUpRequestDTO dto, String savePath) {
 
         // dto를 entity로 변환
         Member member = Member.builder()
                 .account(dto.getAccount())
                 .email(dto.getEmail())
                 .name(dto.getName())
-                .password(encoder.encode(dto.getPassword())).build();
+                .password(encoder.encode(dto.getPassword()))
+                .profileImage(savePath)
+                .build();
 
 
         // mapper에게 회원정보 전달해서 저장명령
@@ -113,6 +114,7 @@ public class MemberService {
                 .nickName(member.getName())
                 .email(member.getEmail())
                 .auth(member.getAuth().toString())
+                .profile(member.getProfileImage())
                 .build();
         // 정보를 세션에 저장
         session.setAttribute(LoginUtil.LOGIN_KEY, dto);

@@ -44,7 +44,7 @@ public class UploadController {
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
-        String filePath = FileUtil.uploadFile(file, rootPath);
+        FileUtil.uploadFile(file, rootPath);
 
         return "redirect:/upload-form";
     }

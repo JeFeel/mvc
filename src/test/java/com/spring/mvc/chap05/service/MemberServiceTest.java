@@ -26,7 +26,7 @@ class MemberServiceTest {
         dto.setName("쿠쿠");
         dto.setEmail("aaa@ddd.com");
 
-        service.join(dto);
+        service.join(dto, savePath);
     }
 
     @Test
