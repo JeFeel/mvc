@@ -25,5 +25,5 @@ public class SignUpRequestDTO {
     private String email;
 
     //프사 첨부파일이 추가됨
-    private MultipartFile profileImage;
+    private MultipartFile profileImage; //null이어도 첨부파일 객체 생성
 }
