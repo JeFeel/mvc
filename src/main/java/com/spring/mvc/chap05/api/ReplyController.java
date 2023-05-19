@@ -42,7 +42,7 @@ public class ReplyController {
         Page page = new Page();
         page.setPageNo(pageNo);
         page.setAmount(20);
-        replyService.getList(boardNo, page);
+//        replyService.getList(boardNo, page);
         ReplyListResponseDTO replyList
                 = replyService.getList(boardNo, page);
 
