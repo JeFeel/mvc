@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,7 +37,7 @@ public class SnsLoginController {
 
     // 인가코드를 받고 토큰을 요청
     @GetMapping("/sns/kakao")
-    public String snsKakao(String code){
+    public String snsKakao(String code, HttpSession session){
         log.info("인가코드: {}", code);
 
         // 인가코드를 가지고 카카오서버에 post요청을 보내야 함
@@ -44,8 +45,8 @@ public class SnsLoginController {
         map.put("appkey", kakaoAppkey);
         map.put("redirect", kakaoRedirectURI);
         map.put("code", code);
-        loginService.kakaoService(map);
-        return "";
+        loginService.kakaoService(map, session);
+        return "redirect:/home";
     }
 
 }

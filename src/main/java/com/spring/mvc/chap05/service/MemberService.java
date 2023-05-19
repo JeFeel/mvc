@@ -5,6 +5,7 @@ import com.spring.mvc.chap05.dto.AutoLoginDTO;
 import com.spring.mvc.chap05.dto.LoginRequestDTO;
 import com.spring.mvc.chap05.dto.LoginUserResponseDTO;
 import com.spring.mvc.chap05.dto.SignUpRequestDTO;
+import com.spring.mvc.chap05.entity.LoginMethod;
 import com.spring.mvc.chap05.entity.Member;
 import com.spring.mvc.chap05.repository.MemberMapper;
 import com.spring.mvc.util.LoginUtil;
@@ -42,6 +43,7 @@ public class MemberService {
                 .name(dto.getName())
                 .password(encoder.encode(dto.getPassword()))
                 .profileImage(savePath)
+                .loginMethod(LoginMethod.COMMON)
                 .build();
 
 

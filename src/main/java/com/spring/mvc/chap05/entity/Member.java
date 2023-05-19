@@ -28,4 +28,5 @@ public class Member {
     private LocalDateTime regDate;
     private LocalDateTime limitTime;
     private String profileImage; // DB에 저장되어있는 프사의 경로 -> String
+    private LoginMethod loginMethod;
 }
