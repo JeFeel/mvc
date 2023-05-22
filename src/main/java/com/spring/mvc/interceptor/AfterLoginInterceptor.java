@@ -20,7 +20,7 @@ public class AfterLoginInterceptor implements HandlerInterceptor {
         HttpSession session = request.getSession();
 
         if(LoginUtil.isLogin(session)){
-            // 로그인일 했다면
+            // 로그인을 했다면
             response.sendRedirect("/home");
             return false;
         }
